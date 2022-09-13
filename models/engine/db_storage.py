@@ -37,6 +37,7 @@ class DBStorage:
             obj.extend(self.__session.query(City).all())
             obj.extend(self.__session.query(User).all())
             obj.extend(self.__session.query(Place).all())
+            obj.extend(self.__session.query(Review).all())
 
         new_dict = {}
         for item in obj:
