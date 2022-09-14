@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
+from os import getenv
 
 
 place_amenity = Table("place_amenity", Base.metadata,
@@ -18,7 +19,7 @@ place_amenity = Table("place_amenity", Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """ A place to stay 
+    """ A place to stay
     Attributes:
         city_id:
         user_id:
@@ -44,31 +45,37 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
 
     reviews = relationship('Review', backref='place', cascade='delete')
-
-
-    @property
-    def reviews(self):
-        """returns the list of Review instances with"""
-        from model import storage
-        rev = storage.all(Review)
-        new_list = []
-
-        for value in rev.values():
-            if value[place_id] == self.id:
-                new_list.append(value)
-        return new_list
-
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             backref='place-amenities',
+                             viewonly=False)
     amenity_ids = []
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-         amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False,
-                                 back_populates="place_amenities"
-    else:
+
+    if getenv("HBNB_TYPE_STORAGE", None) != "db":
+        @property
+        def reviews(self):
+            """returns the list of Review instances with"""
+            from model import storage
+            rev = storage.all(Review)
+            new_list = []
+
+            for value in rev.values():
+                if value[place_id] == self.id:
+                    new_list.append(value)
+            return new_list
+
         @property
         def amenities(self):
             """ Returns list of amenity ids """
-            return self.amenity_ids
-        
+            from models import storage
+            objs = storage.all(Amenity)
+            new_list = []
+
+            for value in objs.values():
+                if value.id in self.amenity_ids:
+                    new_list.append(value)
+            return new_list
+
+        @amenities.setter
         def amenities(self, value):
             """ Appends amenity ids"""
             if type(value) == Amenity:
