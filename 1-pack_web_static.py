@@ -15,7 +15,5 @@ def do_pack():
     path = f"versions/web_static_{time}.tgz"
     local("mkdir -p versions")
 
-    if local(f"tar -cvzf {path} web_static").failed:
-        return None
-    else:
+    if local(f"tar -cvzf {path} web_static").succeeded:
         return path
