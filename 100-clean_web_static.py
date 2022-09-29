@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """
 This script deletes out-of-date archives, using the function do_clean
 """
@@ -26,12 +26,15 @@ def do_clean(number=0):
 
     # delete in remote servers
     output = run("ls /data/web_static/releases")
-    files = output.stdout.split("\r\n")
-    count = len(files)
+    files = output.splitlines()
     number = int(number)
+    files = files[0].split(' ')
+    # print(files)
+    count = len(files)
 
     for file in files:
         if count <= number or count == 1 and number == 0:
             break
-        run("rm -rf /data/web_static/releases/{}".format(file.split('.')[0]))
+        if "web_static_" in file:
+            run("rm -rf /data/web_static/releases/{}".format(file))
         count -= 1
