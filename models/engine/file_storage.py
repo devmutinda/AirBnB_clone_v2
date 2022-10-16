@@ -34,6 +34,10 @@ class FileStorage:
                 temp[key] = val.to_dict()
             json.dump(temp, f)
 
+    def close(self):
+        """Calls reload() method for deserializing the JSON file to objects"""
+        self.reload()
+
     def delete(self, obj=None):
         """to delete obj from __objects if it’s inside"""
         if obj:
@@ -41,7 +45,7 @@ class FileStorage:
             c_id = obj.id
             key = c_name + "." + c_id
             if key in FileStorage.__objects:
-                del(self.all()[key])
+                del (self.all()[key])
                 self.save()
 
     def reload(self):
