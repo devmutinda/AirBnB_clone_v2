@@ -19,7 +19,6 @@ def tear_down(exc):
 def html_page():
     """Renders a html template"""
     states = storage.all(State)
-    # return f"{states.values()}"
     return render_template('7-states_list.html', states=states)
 
 
