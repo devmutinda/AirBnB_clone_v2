@@ -21,7 +21,7 @@ class State(BaseModel, Base):
             new_list = []
             all_obj = storage.all(City)
             for value in all_obj.values():
-                if value['state_id'] == self.id:
+                if value.state_id == self.id:
                     new_list.append(value)
 
             return new_list
