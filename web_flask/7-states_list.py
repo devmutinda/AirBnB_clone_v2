@@ -4,6 +4,7 @@ This script starts a Flask web application
 """
 from flask import Flask, render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -14,10 +15,12 @@ def tear_down(exc):
     storage.close()
 
 
-@app.route('/states_list', strict_slashes=False)
+@app.route('/states_list/', strict_slashes=False)
 def html_page():
     """Renders a html template"""
-    return render_template('7-states_list.html', states=storage.all('State'))
+    states = storage.all(State)
+    # return f"{states.values()}"
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
