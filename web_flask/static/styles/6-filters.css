@@ -37,6 +37,8 @@
 	margin-left: -1px;
 	margin-top: 8px;
 	padding: 25px 0px;
+	overflow-y: scroll;
+	max-height: 300px;
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
@@ -44,7 +46,7 @@
 
 .locations:hover .popover {
 	display: inline-block;
-	overflow: auto;
+	
 }
 
 .filter_amenities:hover .popover {
