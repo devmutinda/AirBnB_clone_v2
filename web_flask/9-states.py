@@ -4,13 +4,19 @@ This module creates a Flask application
 which manipulates storage
 """
 from flask import Flask, render_template
-# from models import storage
-# from models.state import State
 
 app = Flask(__name__)
 
 
-@app.route('/states', defaults={'id': None}, strict_slashes=False)
+@app.route('/states', strict_slashes=False)
+def states_default():
+    """Displays HTML page"""
+    from models import storage
+    from models.state import State
+    states = storage.all(State)
+    return render_template('9-states.html', states=states, id=None)
+
+
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     """Displays a HTML page"""
