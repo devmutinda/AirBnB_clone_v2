@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-This module creates a Flask application
-which manipulates storage
+Routes:
+    /states: HTML page with a list of all State objects.
+    /states/<id>: HTML page displaying the given state with <id>.
 """
 from flask import Flask, render_template
 
