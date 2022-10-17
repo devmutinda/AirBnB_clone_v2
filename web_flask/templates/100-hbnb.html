@@ -65,9 +65,9 @@
 							<p>{{ place.number_bathrooms }} Bathroom</p>
 						</div>
 					</div>
-					<div class="user"><b>Owner</b>: {{ users.get(place.user_id).name }}</div>
+					<div class="user"><b>Owner</b>: {{ users.get('User.' ~ place.user_id).first_name }} {{ users.get('User.' ~ place.user_id).last_name }}</div>
 					<div class="description">
-						{{ place.description }}
+						{{ place.description | safe }}
                     			</div>
 				</article>
 				{% endfor %}

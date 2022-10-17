@@ -93,9 +93,12 @@ h1 {
 }
 
 article h2 {
+	display: block;
 	font-size: 30px;
-	margin: 10px auto;
+	text-align: left;
+	width: 80%;
 	padding: 0px;
+	overflow: auto;
 }
 
 .guest_icon {
