@@ -24,6 +24,7 @@ def html_page():
 @app.teardown_appcontext
 def tear_down(exc):
     """Removes the current sqlalchemy session"""
+    from models import storage
     storage.close()
 
 
