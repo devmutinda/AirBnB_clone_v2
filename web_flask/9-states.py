@@ -25,7 +25,7 @@ def states_id(id):
     from models.state import State
     states = storage.all(State)
     if id:
-        id = f"State.{id}"
+        id = "State.{}".format(id)
     return render_template('9-states.html', states=states, id=id)
 
 
